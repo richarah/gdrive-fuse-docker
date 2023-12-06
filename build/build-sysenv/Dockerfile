@@ -21,7 +21,8 @@ RUN apt-get install -y \
     libgmp-dev \
     libsqlite3-dev \
     zlib1g-dev \
-    libcurl4-gnutls-dev
+    libcurl4-gnutls-dev \
+    libsystemd-dev
 # RUN apt-get install -y libcurl4-openssl-dev zlib1g libgmp-dev m4 pkg-config zlib1g-dev curl git libsqlite3-ocaml-dev libfuse-dev emacs build-essential sqlite3 sqlite libnethttpd-ocaml-dev
 
 # Get rid of any existing opam installation; may be deprecated
