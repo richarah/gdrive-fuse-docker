@@ -10,18 +10,17 @@ RUN opam init --disable-sandboxing
 RUN eval $(opam config env)
 RUN opam update -y
 RUN opam upgrade -y
-RUN opam install dune merlin ocaml-lsp-server odoc ocamlformat utop dune-release cryptokit extlib gapi-ocaml ocamlfuse gapi-ocaml ocamlfuse camlzip sqlite3 -y && eval $(opam config env)
+RUN opam install dune merlin ocaml-lsp-server odoc ocamlformat utop dune-release cryptokit extlib gapi-ocaml ocamlfuse gapi-ocaml ocamlfuse camlzip sqlite3 qcheck-core qcheck ptime -y && eval $(opam config env)
 
 FROM opam-setup
 
 # Add dune to PATH
 RUN PATH="$HOME/root/.opam/default/bin/dune:$PATH"
 
-# tiny_httpd, gapi-ocaml, other pkgs forsaken by opam
 WORKDIR /deps
 RUN git clone https://github.com/c-cube/tiny_httpd
 WORKDIR /deps/tiny_httpd
-RUN export DUNE_CONFIG__GLOBAL_LOCK=disabled && eval $(opam env) && make -j$(nproc) && make install
+RUN export DUNE_CONFIG__GLOBAL_LOCK=disabled && eval $(opam env) && opam install --deps-only . && make -j$(nproc) && make install
 
 WORKDIR /deps
 RUN git clone https://github.com/astrada/gapi-ocaml
