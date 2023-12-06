@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  build-sysenv:
+    build:
+      context: .
+      dockerfile: ./build/build-sysenv/Dockerfile
+    image: sysenv-image:latest
+
+  build-devenv:
+    build:
+      context: .
+      dockerfile: ./build/build-devenv/Dockerfile
+    depends_on:
+      - build-sysenv
+    image: devenv-image:latest
+
+  build-app:
+    build:
+      context: .
+      dockerfile: ./build/build-app/Dockerfile
+    depends_on:
+      - build-devenv
+    image: gdfuse-docker:latest
