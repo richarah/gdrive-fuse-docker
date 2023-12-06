@@ -21,7 +21,7 @@ RUN PATH="$HOME/root/.opam/default/bin/dune:$PATH"
 WORKDIR /deps
 RUN git clone https://github.com/c-cube/tiny_httpd
 WORKDIR /deps/tiny_httpd
-RUN make -j$(nproc) && make install
+RUN export DUNE_CONFIG__GLOBAL_LOCK=disabled && eval $(opam env) && make -j$(nproc) && make install
 
 WORKDIR /deps
 RUN git clone https://github.com/astrada/gapi-ocaml
